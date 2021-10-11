@@ -40,7 +40,7 @@ jobs:
       
     - name: Decompress Downloaded Zip File
       run: |
-        7z x ${{ env.downloads }}/$(steps.vars.sha_full).zip -olinux
+        7z x ${{ env.downloads }}/*.zip -olinux
 
       
     
