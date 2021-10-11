@@ -7,6 +7,9 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
+    
+    env:
+      downloads: ./artifacts
 
     steps:
     - uses: actions/checkout@v2
@@ -23,14 +26,15 @@ jobs:
       run: |
         echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
         echo "::set-output name=sha_short::$(git rev-parse --short HEAD)"
-        
+  
+      
     - name: Download Full SHA
-      run: curl https://codeload.github.com/limsanky/linux/zip/$(GITHUB_SHA).zip -o ./artifacts
+      run: curl https://codeload.github.com/limsanky/linux/zip/$(GITHUB_SHA).zip -o ${{ env.downloads }}
       
     - name: Decompress Full SHA
       uses: TonyBogdanov/zip@1.0
       with:
-        args: unzip -qq ./artifacts/linux-$(GITHUB_SHA).zip -d ./linux
+        args: unzip -qq ${{ env.downloads }}/linux-$(GITHUB_SHA).zip -d ./linux
 
       
     
