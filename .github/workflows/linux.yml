@@ -32,15 +32,11 @@ jobs:
       with:
         url: "https://codeload.github.com/limsanky/linux/zip/$(steps.vars.sha_full).zip"
         target: ${{ env.downloads }}
-
-    - name: ls
-      run: |
-        cd ${{ env.downloads }}
-        ls
       
     - name: Decompress Downloaded Zip File
-      run: |
-        7z x ${{ env.downloads }}/*.zip -olinux
-
+      run: 7z x ${{ env.downloads }}/*.zip -olinux
+    
+    - name: build
+      run: ./build-linux.sh ./linux tinyconfig
       
     
