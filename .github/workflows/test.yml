@@ -1,7 +1,11 @@
 name: test
 
 on:
-  [push]
+  push:
+    branches:
+      - main
+    paths:
+      - 'test/**'
 
 jobs:
   build:
@@ -10,5 +14,4 @@ jobs:
 
     steps:
     - name: make
-      working-directory: ./test
-      run: make
+      run: make -C test
