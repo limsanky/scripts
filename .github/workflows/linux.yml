@@ -26,7 +26,19 @@ jobs:
         
     - name: Download Short SHA
       run: curl https://github.com/limsanky/linux/archive/${{ steps.vars.outputs.sha_short }}.zip -o ./downloaded
+      
     - name: Download Full SHA
       run: curl https://github.com/limsanky/linux/archive/$(GITHUB_SHA).zip -o ./downloaded
+      
+    - name: Decompress Short SHA
+      uses: TonyBogdanov/zip@1.0
+      with:
+        args: unzip -qq ./downloaded/linux-$(steps.vars.outputs.sha_short).zip -d ./linux
+        
+    - name: Decompress Full SHA
+      uses: TonyBogdanov/zip@1.0
+      with:
+        args: unzip -qq ./downloaded/linux-$(GITHUB_SHA).zip -d ./linux
+
       
     
