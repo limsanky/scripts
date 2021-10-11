@@ -33,12 +33,12 @@ jobs:
     - name: Decompress Short SHA
       uses: TonyBogdanov/zip@1.0
       with:
-        args: unzip -qq ./downloaded/linux-$(steps.vars.outputs.sha_short).zip -d ./linux
+        args: unzip -qq ./downloaded/$(steps.vars.outputs.sha_short).zip -d ./linux
         
     - name: Decompress Full SHA
       uses: TonyBogdanov/zip@1.0
       with:
-        args: unzip -qq ./downloaded/linux-$(GITHUB_SHA).zip -d ./linux
+        args: unzip -qq ./downloaded/$(GITHUB_SHA).zip -d ./linux
 
       
     
