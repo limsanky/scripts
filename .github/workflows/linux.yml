@@ -1,6 +1,11 @@
 name: linux
 
-on: push
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'linux/**'
 
 jobs:
   build:
