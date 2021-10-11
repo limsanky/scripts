@@ -1,19 +1,47 @@
 name: linux
 
 on:
-  [push]
+  push:
+    branches:
+      - main
+    paths:
+      - 'linux/**'
 
 jobs:
   build:
 
     runs-on: ubuntu-latest
+    
+    env:
+      downloads: ./artifacts
 
     steps:
     - uses: actions/checkout@v2
     
-    - name: Install Curl
-      run: sudo apt install curl
+    - name: Install Curl and Git
+      run: |
+        sudo apt install curl
+        sudo apt install git
       
-    - name: Install Git
-      run: sudo apt install git
+    - name: Declare some variables
+      id: vars
+      shell: bash
+      run: |
+        echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
+        echo "::set-output name=sha_short::$(git rev-parse --short HEAD)"
+        echo "::set-output name=sha_full::$(GITHUB_SHA)"
+  
+    - uses: suisei-cn/actions-download-file@v1
+      id: downloadfile  # Remember to give an ID if you need the output filename
+      name: Download the file
+      with:
+        url: "https://codeload.github.com/limsanky/linux/zip/$(steps.vars.sha_full).zip"
+        target: ${{ env.downloads }}
       
+    - name: Decompress Downloaded Zip File
+      run: 7z x ${{ env.downloads }}/*.zip -olinux
+    
+    - name: build
+      run: ./build-linux.sh ./linux tinyconfig
+      
+    
