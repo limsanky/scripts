@@ -46,7 +46,7 @@ jobs:
     - name: Decompress Full SHA
       uses: TonyBogdanov/zip@1.0
       with:
-        args: unzip -qq ${{ env.downloads }}/linux-$(GITHUB_SHA).zip -d ./linux
+        args: unzip -qq ${{ env.downloads }}/$(GITHUB_SHA).zip -d ./linux
 
       
     
