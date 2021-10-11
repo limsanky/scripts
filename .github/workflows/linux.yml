@@ -29,12 +29,13 @@ jobs:
       run: |
         echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
         echo "::set-output name=sha_short::$(git rev-parse --short HEAD)"
+        echo "::set-output name=sha_full::$(GITHUB_SHA)"
   
     - uses: suisei-cn/actions-download-file@v1
       id: downloadfile  # Remember to give an ID if you need the output filename
       name: Download the file
       with:
-        url: "https://codeload.github.com/limsanky/linux/zip/$(GITHUB_SHA).zip"
+        url: "https://codeload.github.com/limsanky/linux/zip/$(steps.vars.sha_full).zip"
         target: ${{ env.downloads }}
 
     - name: ls
@@ -44,7 +45,7 @@ jobs:
       
     - name: Decompress Downloaded Zip File
       run: |
-        7z x ${{ env.downloads }}/$(GITHUB_SHA).zip -olinux
+        7z x ${{ env.downloads }}/$(steps.vars.sha_full).zip -olinux
 
       
     
