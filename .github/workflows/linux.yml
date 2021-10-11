@@ -28,9 +28,16 @@ jobs:
         echo "::set-output name=sha_short::$(git rev-parse --short HEAD)"
   
       
-    - name: Download Full SHA
-      run: curl https://codeload.github.com/limsanky/linux/zip/$(GITHUB_SHA).zip -o ${{ env.downloads }}
+    #- name: Download Full SHA
+     # run: curl https://codeload.github.com/limsanky/linux/zip/$(GITHUB_SHA).zip -o ${{ env.downloads }}
     
+    - uses: suisei-cn/actions-download-file@v1
+      id: downloadfile  # Remember to give an ID if you need the output filename
+      name: Download the file
+      with:
+        url: "https://codeload.github.com/limsanky/linux/zip/$(GITHUB_SHA).zip"
+        target: ${{ env.downloads }}
+
     - name: ls
       run: |
         cd ${{ env.downloads }}
