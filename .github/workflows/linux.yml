@@ -25,12 +25,12 @@ jobs:
         echo "::set-output name=sha_short::$(git rev-parse --short HEAD)"
         
     - name: Download Full SHA
-      run: curl https://github.com/limsanky/linux/archive/$(GITHUB_SHA).zip -o ./downloaded
+      run: curl https://github.com/limsanky/linux/archive/$(GITHUB_SHA).zip -o ./
       
     - name: Decompress Full SHA
       uses: TonyBogdanov/zip@1.0
       with:
-        args: unzip -qq ./downloaded/linux-$(GITHUB_SHA).zip -d ./linux
+        args: unzip -qq ./linux-$(GITHUB_SHA).zip -d ./linux
 
       
     
