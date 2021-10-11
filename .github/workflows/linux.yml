@@ -30,7 +30,5 @@ jobs:
         args: unzip -qq ./downloaded/linux-${{ git_hash }}.zip -d ./linux
         
     - name: build
-      env:
-        linux_path: './linux'
-      run: ./build-linux.sh ${{ linux_path }} tinyconfig 
+      run: ./build-linux.sh ./linux tinyconfig 
 
