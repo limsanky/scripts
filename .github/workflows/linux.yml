@@ -1,0 +1,37 @@
+name: linux
+
+on:
+  [push]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - env:
+        linux_path: './linux'
+        
+    - uses: actions/checkout@v2
+    
+    - name: Install Curl
+      run: sudo apt install curl
+
+    - name: Download
+      env:
+        git_hash: $(git rev-parse --short "$GITHUB_SHA")
+        git_branch: ${GITHUB_REF#refs/heads/}
+      run: curl https://github.com/limsanky/linux/archive/${{ git_hash }}.zip -o ./downloaded
+
+    - name: Decompress
+      uses: TonyBogdanov/zip@1.0
+      env:
+        git_hash: $(git rev-parse --short "$GITHUB_SHA")
+        git_branch: ${GITHUB_REF#refs/heads/}
+      with:
+        args: unzip -qq ./downloaded/linux-${{ git_hash }}.zip -d ./linux
+        
+    - name: build
+    
+      run: ./build-linux.sh ${{ linux_path }} tinyconfig 
+
