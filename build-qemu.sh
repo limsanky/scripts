@@ -17,10 +17,16 @@ fi
 QEMU_SRC_DIR=`realpath $QEMU_SRC_DIR`
 
 BUILD_DIR=$(dirname $0)/build/qemu
-mkdir -p $BUILD_DIR
+
+if [ ! -d $BUILD_DIR ]; then
+	echo Creating $BUILD_DIR
+	mkdir -p $BUILD_DIR
+fi
 
 BUILD_DIR=`realpath $BUILD_DIR`
 INSTALL_DIR=$BUILD_DIR/install
+
+echo $INSTALL_DIR
 
 mkdir -p $INSTALL_DIR
 
