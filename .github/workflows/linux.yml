@@ -14,11 +14,10 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     
-    - name: Install Curl
-      run: sudo apt install curl
-      
-    - name: Install Git
-      run: sudo apt install git
+    - name: Install Curl and Git
+      run: |
+        sudo apt install curl
+        sudo apt install git
       
     - name: Declare some variables
       id: vars
@@ -27,10 +26,6 @@ jobs:
         echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
         echo "::set-output name=sha_short::$(git rev-parse --short HEAD)"
   
-      
-    #- name: Download Full SHA
-     # run: curl https://codeload.github.com/limsanky/linux/zip/$(GITHUB_SHA).zip -o ${{ env.downloads }}
-    
     - uses: suisei-cn/actions-download-file@v1
       id: downloadfile  # Remember to give an ID if you need the output filename
       name: Download the file
@@ -43,10 +38,9 @@ jobs:
         cd ${{ env.downloads }}
         ls
       
-    - name: Decompress Full SHA
-      uses: TonyBogdanov/zip@1.0
-      with:
-        args: unzip -qq ${{ env.downloads }}/$(GITHUB_SHA).zip -d ./linux
+    - name: Decompress Downloaded Zip File
+      run: |
+        7z x ${{ env.downloads }}/$(GITHUB_SHA).zip -olinux
 
       
     
