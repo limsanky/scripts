@@ -17,3 +17,16 @@ jobs:
     - name: Install Git
       run: sudo apt install git
       
+    - name: Declare some variables
+      id: vars
+      shell: bash
+      run: |
+        echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
+        echo "::set-output name=sha_short::$(git rev-parse --short HEAD)"
+        
+    - name: Download Short SHA
+      run: curl https://github.com/limsanky/linux/archive/${{ steps.vars.outputs.sha_short }}.zip -o ./downloaded
+    - name: Download Full SHA
+      run: curl https://github.com/limsanky/linux/archive/${{ GITHUB_SHA }}.zip -o ./downloaded
+      
+    
