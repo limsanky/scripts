@@ -27,6 +27,6 @@ jobs:
     - name: Download Short SHA
       run: curl https://github.com/limsanky/linux/archive/${{ steps.vars.outputs.sha_short }}.zip -o ./downloaded
     - name: Download Full SHA
-      run: curl https://github.com/limsanky/linux/archive/${{ GITHUB_SHA }}.zip -o ./downloaded
+      run: curl https://github.com/limsanky/linux/archive/$(GITHUB_SHA).zip -o ./downloaded
       
     
